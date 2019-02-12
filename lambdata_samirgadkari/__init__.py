@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
+from . import show
 
-VERSION = 0
+show = show.Show()
 
-ONES = np.ones(100)
