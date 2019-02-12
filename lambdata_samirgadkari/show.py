@@ -1,6 +1,5 @@
 import pandas as pd
 
-
 class Show:
     """ Show information in a useful way."""
 
@@ -30,7 +29,7 @@ class Show:
 
             if len(in_cols) != len(out_cols):
                 print("Num columns in the two dataframes don't match up")
-                return {}
+                return None
 
             d = {}
             for i in range(len(in_cols)):
