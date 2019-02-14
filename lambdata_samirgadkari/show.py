@@ -1,4 +1,5 @@
 import pandas as pd
+from minepy import MINE
 
 class Show:
     """ Show information in a useful way."""
@@ -13,7 +14,31 @@ class Show:
         ns = pd.DataFrame(df.isnull().sum())
         return ns.rename({0: 'Nulls'}, axis=1)
 
-    def all(self, df):
+    def corr(self, df, target_col_name):
+        correlations = { 'pearson': df.corr(method = 'pearson'),
+                         'kendall': df.corr(method = 'kendall'),
+                         'spearman': df.corr(method = 'spearman') }
+        res = pd.DataFrame({'pearson' + '-' + target_col_name: correlations['pearson'][target_col_name],
+                            'kendall' + '-' + target_col_name: correlations['kendall'][target_col_name],
+                            'spearman' + '-' + target_col_name: correlations['spearman'][target_col_name]}) \
+                .T
+        return res
+
+    def mic(self, df, target_col_name):
+        mine = MINE()
+        cols = df.columns
+
+        df2 = pd.DataFrame()
+        for col in cols:
+            if col == target_col_name:
+                continue
+
+            mine.compute_score(df[col], df[target_col_name])
+            df2[col] = [mine.mic()]
+
+        return df2.rename({0: 'MIC' + '-' + target_col_name}, axis = 0)
+
+    def all(self, df, target_col_name):
         """
         Show nulls and describe outputs together
         """
@@ -48,4 +73,8 @@ class Show:
         ns = ns.rename(create_dict(df, ns), axis=1)
         ns = ns.rename({0: 'Nulls'})
 
-        return describe.append(ns)
+        res = describe.append(ns)
+
+        res = res.append(self.corr(df, target_col_name))
+        res = res.append(self.mic(df, target_col_name))
+        return res

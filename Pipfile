@@ -9,6 +9,7 @@ twine = "*"
 [packages]
 numpy = "*"
 pandas = "*"
+minepy = "*"
 
 [requires]
 python_version = "3.7"

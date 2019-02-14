@@ -7,7 +7,8 @@ import setuptools
 
 REQUIRED = [
     'numpy', # You can put conditions here like 'numpy >= 2.3.0'
-    'pandas'
+    'pandas',
+    'minepy'
 ]
 
 with open('README.md', 'r') as fh:
@@ -16,7 +17,7 @@ with open('README.md', 'r') as fh:
 # This is all the stuff we're telling pypi
 setuptools.setup(
     name='lambdata-samirgadkari',
-    version='0.0.5',  # We have to edit this if we changed code and are now
+    version='0.0.6',  # We have to edit this if we changed code and are now
                       # pushing it.
     author='samirgadkari',
     description='A collection of data science helper functions.',
