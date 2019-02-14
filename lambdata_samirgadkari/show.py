@@ -1,5 +1,7 @@
 import pandas as pd
 from minepy import MINE
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+from statsmodels.tools.tools import add_constant
 
 class Show:
     """ Show information in a useful way."""
@@ -37,7 +39,15 @@ class Show:
             df2[col] = [mine.mic()]
 
         return df2.rename({0: 'MIC' + '-' + target_col_name}, axis = 0)
-
+    
+    # Variance Inflation Factor using Stats
+    def VIF(df):
+        X = df.assign(const=1)
+        pd.Series([variance_inflation_factor(X.values, i) 
+               for i in range(X.shape[1])], 
+              index=X.columns)
+        return X
+        
     def all(self, df, target_col_name):
         """
         Show nulls and describe outputs together
