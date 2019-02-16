@@ -1,7 +1,6 @@
 import pandas as pd
 from minepy import MINE
 from statsmodels.stats.outliers_influence import variance_inflation_factor
-from statsmodels.tools.tools import add_constant
 
 
 class Show:
@@ -79,7 +78,7 @@ class Show:
         """
         res = pd.DataFrame(
                 {'VIF': [variance_inflation_factor(df.values, i)
-                  for i in range(df.shape[1])]},
+                         for i in range(df.shape[1])]},
                 index=df.columns)
         return res.T
 
